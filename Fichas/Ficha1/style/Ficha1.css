@@ -1,3 +1,8 @@
+.alert-winning-user, .user-dialog-box {
+  padding: 10px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
 .foo {
   background: orange;
 }
@@ -12,14 +17,13 @@ html {
   font-size: 0.5em;
 }
 
-.user-dialog-box, .alert-winning-user {
-  border: 10px, solid, gray;
-  padding: 10px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+.user-dialog-box {
+  border: 10px solid grey;
 }
 
 .alert-winning-user {
   border-color: green;
+  border: 10px solid green;
 }
 
 /*# sourceMappingURL=Ficha1.css.map */

@@ -1,5 +1,26 @@
-.foo { background: orange;}
-.foo p {color: blue;font-size: 14px;font-weight: bold;}
-html{font-size:0.5em;}
-.user-dialog-box, .alert-winning-user{border: 10px, solid,gray;padding: 10px; box-shadow: 0 0 30px rgba($color: #000000, $alpha: 0.5)}
-.alert-winning-user{border-color: green}
+%box{
+    padding: 10px; 
+    box-shadow: 0 0 30px rgba($color: #000000, $alpha: 0.5)
+}
+@mixin color($color) {
+    border:10px solid $color
+}
+
+.foo { 
+    background: orange;
+}
+.foo p {
+    color: blue;font-size: 14px;font-weight: bold;
+}
+html{
+    font-size:0.5em;
+}
+.user-dialog-box{
+    @extend %box;
+    @include color(grey)
+}
+.alert-winning-user{
+    border-color: green;
+    @extend %box;
+    @include color(green)
+}
