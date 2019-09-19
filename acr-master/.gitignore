@@ -1,0 +1,31 @@
+
+*.db
+.DS_Store
+
+node_modules
+
+# SASS
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
+# solutions
+solution.*
+solutions.*
+/01sass/exercises
+/02dom
+/03jquery
+/04onsen
+/05php
+/06laravel
+/07api
+
+/04onsen/solution*
+/04onsen/trab*
+/05php/solutions.*
+/06laravel/solutions.*
+/07api/solutions
+/07api/sec
+
+*.code-workspace
