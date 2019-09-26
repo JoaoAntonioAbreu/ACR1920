@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="menu" id="mainMenu">
+      <ul>
+        <li><a href="index.html" class="menu-item">GET </a></li>
+        <li><a href="set.html" class="menu-item">SET </a></li>
+        <li><a href="create.html" class="menu-item">Create / remove </a></li>
+        <li><a href="classes.html" class="menu-item">Style classes </a></li>
+        <li><a href="events.html" class="menu-item">Events </a></li>
+        <li><a href="exercises.html" class="menu-item">Exercises </a></li>
+        <li><a href="#" class="menu-item">DOM </a></li>
+      </ul>
+    </div>
+
+    <h2 id="header">DOM Exercises </h2>
+    <div class="spaced">
+      <input type="text" id="name"/>
+      <button id="btn1">Show .value in console!</button>
+    </div>
+
+    <div id="nameList" class="spaced">
+      <input type="text" id="name2"/>
+      <button id="btn2">Add to Names list</button>
+      <h2 id="namesHeader">Names:</h2>
+      <ul>
+        <li>Gonçalo</li>
+      </ul>
+    </div>
+
+    <span id="result">Result: </span>
+
+    <script>
+      //Ex1
+      const headerElement = document.querySelector('#header');
+      headerElement.style.color='blue';
+
+      //Ex2
+      const menuElement = document.querySelector('.menu');
+      menuElement.setAttribute('class','menu-clear');
+
+      //Ex3
+      const pElement = document.createElement('p');
+      const bodyElement = document.querySelector('body');
+      bodyElement.appendChild(pElement);
+      pElement.textContent = 'ola mundo';
+
+      //Ex4
+      const spanElement = document.getElementById("result");
+      const aElement = document.getElementsByTagName('a')
+      for (let i = 0; i < aElement.length; i++) {
+        spanElement.append(aElement[i])
+        
+      };
+
+
+      //Ex5
+      const buttonElement = document.getElementById('btn1');
+      const inputElement = document.getElementById('name');
+      buttonElement.addEventListener('click',function(){
+        console.log(inputElement.value)
+      });
+
+
+      //Ex6
+      const button2Element = document.getElementById('btn2');
+      const input2Element = document.getElementById('name2');
+      const namesElement = document.querySelector('#nameList>ul')
+      button2Element.addEventListener('click', function(){
+        const liElement = document.createElement('li');
+        namesElement.append(liElement)
+        liElement.append(input2Element.value)
+        console.log(input2Element.value)
+      })
+
+    </script>
+
+  </body>
+</html>
