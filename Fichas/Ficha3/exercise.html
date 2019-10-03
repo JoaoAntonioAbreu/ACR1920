@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+</head>
+
+<body>
+    <ons-page>
+        <ons-navigator animation="slide"></ons-navigator>
+        <ons-toolbar>
+            <div class="center">Home</div>
+        </ons-toolbar>
+
+        <ons-tabbar swipeable position="auto">
+            <ons-tab active page="home.html" id="listTab" label="Tab 1" icon="ion-home">
+            </ons-tab>
+            <ons-tab page="adicionar.html" id="addTab" label="Tab 2" icon="fa-plus">
+            </ons-tab>
+            <ons-tab page="contactar.html" id="contactTab" label="Tab 3" icon="fa-address-book">
+        </ons-tabbar>
+    </ons-page>
+
+    <template id="home.html">
+        <ons-page id="Tab1">
+            <p style="text-align: center;">
+                This is the first page.
+            </p>
+            <ons-list id="lista">
+                <ons-list-item id="name-list">Item A</ons-list-item>
+                <ons-list-item id="name-list">Item B</ons-list-item>
+                <ons-list-item id="name-list">Item C</ons-list-item>
+            </ons-list>
+            <ons-fab position="bottom right">
+                <ons-icon icon="md-plus">
+                </ons-icon>
+            </ons-fab>
+
+        </ons-page>
+    </template>
+
+    <template id="adicionar.html">
+        <ons-page id="Tab2">
+            <p style="text-align: center;">
+                This is the second page.
+
+                <br>
+                <ons-input id="nome" modifier="underbar" placeholder="Nome" float></ons-input>
+                <br>
+                <ons-button onclick="adicionar()">Adicionar</ons-button>
+                <br>
+                <ons-toast id="success" animation="ascend">
+                    Adicionado com sucesso
+                    <button onclick="success.hide()">ok</button>
+                </ons-toast>
+            </p>
+        </ons-page>
+    </template>
+    <template id="contactar.html">
+        <ons-page id="Tab3">
+            <p style="text-align: center;">
+                This is the third page.
+            </p>
+        </ons-page>
+    </template>
+    <script>
+        var adicionar = function () {
+            var list = document.getElementById('lista')
+            var add = document.createElement('ons-list-item')
+            var nome = document.getElementById('nome');
+            //var clear = document.getElementById('nome');
+            if (nome.value === "") {
+                alert('Escreve algo no nome!!!!');
+            } else {
+                success.toggle();
+                add.append(nome.value);
+                list.append(add);
+                nome.value = "";
+            }
+        }
+
+        ons.ready(function () {
+            var fab = document.querySelector("ons-fab");
+            
+            
+            
+         })
+    </script>
+</body>

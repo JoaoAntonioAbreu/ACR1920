@@ -39,10 +39,30 @@
     <span id="result">Result: </span>
 
     <script>
+      var paragraph = $("<p></p>").text("Added	paragraph text")
+      var menu = $("a").clone()
       //Ex1
       $("#header").css("color","blue")
+   
+      //Ex2
+      $("#mainMenu").removeClass("menu")
+      $('#mainMenu').addClass("menu-clear")
 
+      //Ex3
+      $("body").append(paragraph)
+      
+      //Ex4
+      $("#result").append(menu)
+
+      //Ex5
+      $("#btn1").click(function(){
+        console.log($("#name").val())
+      })
+
+      //Ex6
+      $("#btn2").click(function(){
+        $("#nameList").append($("#name2").val())
+      })
     </script>
-
   </body>
 </html>
