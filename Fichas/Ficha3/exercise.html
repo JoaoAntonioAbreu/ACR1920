@@ -9,13 +9,13 @@
 
 <body>
     <ons-page>
-        <ons-navigator animation="slide"></ons-navigator>
+        <ons-navigator id="navigator" animation="slide" page="home.html"></ons-navigator>
         <ons-toolbar>
             <div class="center">Home</div>
         </ons-toolbar>
 
-        <ons-tabbar swipeable position="auto">
-            <ons-tab active page="home.html" id="listTab" label="Tab 1" icon="ion-home">
+        <ons-tabbar swipeable position="auto" id="tabbar">
+            <ons-tab page="home.html" id="listTab" label="Tab 1" icon="ion-home">
             </ons-tab>
             <ons-tab page="adicionar.html" id="addTab" label="Tab 2" icon="fa-plus">
             </ons-tab>
@@ -33,7 +33,7 @@
                 <ons-list-item id="name-list">Item B</ons-list-item>
                 <ons-list-item id="name-list">Item C</ons-list-item>
             </ons-list>
-            <ons-fab position="bottom right">
+            <ons-fab position="bottom right" id="fabulous" onclick="change()">
                 <ons-icon icon="md-plus">
                 </ons-icon>
             </ons-fab>
@@ -65,12 +65,19 @@
             </p>
         </ons-page>
     </template>
+    <template id="items.html">
+        <ons-page id="Tab4">
+            <p style="text-align: center;">
+                This is the item {{}} page.
+            </p>
+        </ons-page>
+    </template>
     <script>
         var adicionar = function () {
-            var list = document.getElementById('lista')
-            var add = document.createElement('ons-list-item')
+            var list = document.getElementById('lista');
+            var add = document.createElement('ons-list-item');
+            add.removeAttribute('modifier')
             var nome = document.getElementById('nome');
-            //var clear = document.getElementById('nome');
             if (nome.value === "") {
                 alert('Escreve algo no nome!!!!');
             } else {
@@ -81,11 +88,12 @@
             }
         }
 
-        ons.ready(function () {
-            var fab = document.querySelector("ons-fab");
-            
-            
-            
-         })
+        var change = function(){
+            document.querySelector('ons-tabbar').setActiveTab(1);
+        }
+        
+
+                    
+       
     </script>
 </body>

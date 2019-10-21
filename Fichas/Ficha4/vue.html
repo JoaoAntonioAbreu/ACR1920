@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <title>ACR Vue</title>
+</head>
+<body style="padding: 40px;">
+    <ul>
+        <li><a href="index.html">Fetch API</a></li>
+        <li><a href="vue.html">vue.js + fetch</a></li>
+        <li><a href="jquery.html">jQuery AJAX</a></li>
+        <li><a href="exercise.html">Exercise</a></li>
+        <li><a href="xhr.html">XMLHttpRequest</a></li>
+    </ul>
+    <div class="container content" id="app">
+
+        <h3>Vue</h3>
+        <button id="btn1" v-on:click="fetchName">get user name</button>
+        <button id="btn2" v-on:click="fetchPosts">get title of user posts</button>
+
+        <div class="row">
+          <p>{{ user.name }}</p>
+        </div>
+
+        <div class="row">
+          <h2>Posts</h2>
+          <div class="col-md-2" v-for="post in posts">
+              <div class="advs-box advs-box-top-icon">
+                  <h4>{{ post.title }}</h4>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        user: {},
+        posts: null
+      },
+      methods: {
+        fetchName: function () {
+          fetch('https://jsonplaceholder.typicode.com/users/1')
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              this.user = json
+              //console.log(self.todos)
+            }).catch( error => { console.log(error); });
+        },
+
+        fetchPosts: function () {
+          fetch('https://jsonplaceholder.typicode.com/users/1/posts')
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              this.posts = json
+              //console.log(self.posts)
+            }).catch( error => { console.log(error); });
+        }
+      }
+
+    })
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

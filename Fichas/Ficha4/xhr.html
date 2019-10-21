@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>ACR XHR AJAX</title>
+
+</head>
+
+<body style="padding: 40px;">
+
+    <ul>
+      <li><a href="index.html">Fetch API</a></li>
+      <li><a href="vue.html">vue.js + fetch</a></li>
+      <li><a href="jquery.html">jQuery AJAX</a></li>
+      <li><a href="exercise.html">Exercise</a></li>
+      <li><a href="xhr.html">XMLHttpRequest</a></li>
+    </ul>
+
+    <h3>XMLHttpRequest</h3>
+
+    <div class="container" id="content">
+    </div>
+
+    <script>
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var data = JSON.parse(this.responseText);
+          console.log(data);
+          document.getElementById("content").innerHTML = data.name;
+        }
+      };
+      xhr.open('GET', 'https://jsonplaceholder.typicode.com/users/1');
+      xhr.send();
+    </script>
+</body>
+</html>

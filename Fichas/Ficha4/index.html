@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+    <title>ACR AJAX</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body style="padding: 40px;">
+
+    <ul>
+        <li><a href="index.html">Fetch API</a></li>
+        <li><a href="vue.html">vue.js + fetch</a></li>
+        <li><a href="jquery.html">jQuery AJAX</a></li>
+        <li><a href="exercise.html">Exercise</a></li>
+        <li><a href="xhr.html">XMLHttpRequest</a></li>
+    </ul>
+
+
+    <div class="container">
+      <h3>Fetch</h3>
+      <button id="btn">get user name</button>
+      <button id="btn2">get title of user posts</button>
+    </div>
+
+    <div id="result1">
+    </div>
+
+    <div id="result2">
+    </div>
+
+    <script>
+    const myurl = "https://jsonplaceholder.typicode.com/users/1";
+
+     $('#btn').click(function(){
+      fetch(myurl)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+          $("#result1").text(data.name);
+          //document.querySelector("#result1").textContent = data.name;
+        })
+        .catch(function (err) {
+          console.log("Something went wrong!", err);
+        });
+    })
+
+    // metodo ALTERNATIVO, resumido
+/*     $('#btn').click(function(){
+      fetch(myurl)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          $("#result1").text(data.name)
+        })
+        .catch(err => {
+          console.log("Something went wrong!", err);
+        });
+    }) */
+
+
+    //const result2 = document.getElementById('result2');
+    $('#btn2').click(function(){
+      fetch(myurl + '/posts')
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+          var newDiv = $("<div></div>")
+          data.forEach(function(post){
+            var elementP = $("<p></p>").text(post.title);
+            newDiv.append(elementP);
+          });
+          $("#result2").html(newDiv);
+        })
+        .catch(function (err) {
+          console.log("Something went wrong!", err);
+      });
+    })
+
+    </script>
+</body>
+</html>

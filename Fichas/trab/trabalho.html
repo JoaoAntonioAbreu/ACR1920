@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+</head>
+
+<body>
+
+    <ons-navigator id="myNavigator">
+        <ons-page id="puts">
+            <ons-toolbar>
+                <div class="center">Trabalho de Avaliacao</div>
+            </ons-toolbar>
+
+            <ons-tabbar position="auto" swipeable>
+                <ons-tab icon="home" label="Home" page="home.html"></ons-tab>
+                <ons-tab icon="cog" label="Settings" page="settings.html"></ons-tab>
+            </ons-tabbar>
+        </ons-page>
+    </ons-navigator>
+
+    <template id="home.html">
+        <ons-page>
+            <ons-pull-hook id="pull-hook">
+                Pull to refresh
+            </ons-pull-hook>
+            <h2>Pepe Items</h2>
+
+            <ons-list-title>Lista de Pepes</ons-list-title>
+            <ons-list>
+                <ons-list-item onclick="customPush2(event)">Pepe One</ons-list-item>
+                <ons-list-item onclick="customPush2(event)">Pepe Two</ons-list-item>
+                <ons-list-item onclick="customPush2(event)">Pepe Three</ons-list-item>
+            </ons-list>
+        </ons-page>
+    </template>
+
+    <template id="settings.html">
+        <ons-page id="settings">
+            <ons-list>
+                <ons-list-header>Settings</ons-list-header>
+                <ons-list-item>
+                    <div class="center">
+                        Funcionalidade 1
+                    </div>
+                    <div class="right">
+                        <ons-switch id="switch1"></ons-switch>
+                    </div>
+                </ons-list-item>
+                <ons-list-item>
+                    <div class="center">
+                        Funcionalidade 2
+                    </div>
+                    <div class="right">
+                        <ons-switch disabled id="switch2"></ons-switch>
+                    </div>
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
+    </template>
+
+
+    <template id="item.html">
+        <ons-page id="item">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-back-button>Back</ons-back-button>
+                </div>
+            </ons-toolbar>
+
+            <ons-card>
+                <img src="https://ichef.bbci.co.uk/news/660/cpsprodpb/16620/production/_91408619_55df76d5-2245-41c1-8031-07a4da3f313f.jpg"
+                    alt="Onsen UI" style="width:100%">
+                <div class="title"></div>
+                <div class="content">
+                    <p>Base Pepe</p>
+                </div>
+                <div>
+                    <ons-button onclick="showsheet()">Actions</button>
+                </div>
+                <ons-action-sheet id="sheet">
+                    <ons-action-sheet-button icon="md-square-o">Label</ons-action-sheet-button>
+                    <ons-action-sheet-button icon="md-square-o">Label</ons-action-sheet-button>
+                    <ons-action-sheet-button icon="md-close">Cancel</ons-action-sheet-button>
+                </ons-action-sheet>
+                <br>
+                <ons-gesture-detector>
+                    <div id="detect-area" style="width: 100%; height: 100px; border:1px solid black; text-align: center">
+                        Swipe Here
+                    </div>
+                </ons-gesture-detector>
+            </ons-card>
+            <ons-speed-dial position="bottom right" direction="up">
+                <ons-fab>
+                    <ons-icon icon="md-share"></ons-icon>
+                </ons-fab>
+                <ons-speed-dial-item>
+                    <ons-icon icon="md-google-plus" id="share" onclick="share()"></ons-icon>
+                </ons-speed-dial-item>
+            </ons-speed-dial>
+        </ons-page>
+    </template>
+
+    <script>
+        document.addEventListener('init', function (event) {
+            if (event.target.id === 'item') {
+                var cardTitle = event.target.data && event.target.data.cardTitle ? event.target.data.cardTitle : 'Custom Card';
+                event.target.querySelector('ons-card div.title').textContent = cardTitle;
+            }
+
+        });
+
+        var customPush2 = function (event) {
+            myNavigator.pushPage('item.html', { data: { cardTitle: event.target.textContent } })
+        };
+
+
+        ons.ready(function () {
+            var pullHook = document.getElementById('pull-hook');
+
+            pullHook.addEventListener('changestate', function (event) {
+                var message = '';
+
+                switch (event.state) {
+                    case 'initial':
+                        message = 'Pull to refresh';
+                        break;
+                    case 'preaction':
+                        message = 'Release';
+                        break;
+                    case 'action':
+                        message = 'Loading...';
+                        break;
+                }
+
+                pullHook.innerHTML = message;
+            });
+
+            pullHook.onAction = function (done) {
+                setTimeout(done, 1000);
+            };
+        });
+
+        document.addEventListener("init", function (event) {
+            var switch1 = document.getElementById("switch1");
+            var switch2 = document.getElementById("switch2");
+            if (event.target.id == "settings") {
+                switch1.addEventListener('change', function (e) {
+                    if (switch2.hasAttribute('disabled')) {
+                        switch2.removeAttribute('disabled');
+                    }
+                    else {
+                        switch2.setAttribute('disabled')
+                        switch2.checked = false;
+                    }
+                });
+            }
+        }, false);
+
+        var showsheet = function () {
+            ons.openActionSheet({
+                title: 'From object',
+                cancelable: true,
+                buttons: [
+                    'Label 0',
+                    'Label 1',
+                    {
+                        label: 'Label 2',
+                        modifier: 'destructive'
+                    },
+                    {
+                        label: 'Cancel',
+                        icon: 'md-close'
+                    }
+                ]
+            }).then(function (index) { console.log('index: ', index) });
+        };
+
+
+        document.addEventListener('swiperight', function (event) {
+            if (event.target.matches('#detect-area')) {
+                document.querySelector('#myNavigator').popPage({ refresh: true });
+            }
+
+        });
+
+        var share = function(){
+            ons.notification.toast('Partilhado com sucesso ', { timeout: 1000 });
+            document.querySelector("ons-speed-dial").hideItems()
+        }
+
+    </script>
+</body>
+
+</html>
