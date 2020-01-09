@@ -1,14 +1,21 @@
 @extends('layouts.app')
 
-@section('content')
-<h1>Create a new movie</h1>
 
-    <form method="POST" action="/moviecreate/store" enctype="multipart/form-data">
+
+@section('content')
+
+<div class="row text-center">
+    <div class="col-md-8 col-md-offset-2">
+        <h1>Create a new movie</h1>
+
+    <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div>
-        <input type="text" name="title" class="form-control" placeholder="Movie title" required>
+            <input type="text" name="title" class="form-control" placeholder="Movie title" required>
         </div>
-
+        <div>
+            <textarea name="trailer" class="form-control" placeholder="trailer" required></textarea>
+        </div>
         <div>
             <textarea name="year" class="form-control" placeholder="year" required></textarea>
         </div>
@@ -25,9 +32,11 @@
             <input id="image" type="file" class="form-control" name="image">
         </div>
         <div>
-            <button type="submit">Create Article</button>
+            <button type="submit">Insert Movie</button>
         </div>
     </form>
+</div>
+</div>
     @if ($errors->any())
         <div class="notification is-danger">
             <ul>
@@ -36,5 +45,5 @@
                 @endforeach
             </ul>
         </div>
-        @endif
+    @endif
 @endsection

@@ -41,4 +41,8 @@ class User extends Authenticatable
     {
         return $this->profile_image;
     }
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
+      }
 }

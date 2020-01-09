@@ -25,7 +25,7 @@ class ReviewController extends Controller
 
     public function create($movie_id)
     {
-        return View::make('review.create')->with('movie', $movie_id);
+        return view('reviews.create');
     }
 
 
@@ -40,14 +40,14 @@ class ReviewController extends Controller
 
         // Form validation
         $validated = request()->validate([
-            'body'=>'required',
+            'body'=>'required|max:255',
         ]);
 
         $validated['owner_id']=auth()->id();
         dd($request->getpathInfo());
 
 
-       return back();
+       return redirect()->route('movies.show',);
     }
 
     /**

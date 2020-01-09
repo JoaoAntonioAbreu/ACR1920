@@ -11,16 +11,14 @@
 |
 */
 
-Route::get('/','MovieController@index');
-Route::get('/movieshow/{movie}','MovieController@show');
+Route::get('/movies','MovieController@index')->name('movies.index');
+Route::get('/movies/{movie}','MovieController@show')->name('movies.show');
+Route::get('/movies/create','MovieController@create')->name('movies.create');
+Route::post('/movies/store','MovieController@store')->name('movies.store');
+Route::delete('/movies/{movie}','MovieController@delete')->name('movies.destroy');
+Route::get('/movies/{movie}/edit','MovieController@edit')->name('movies.edit');
+Route::get('/movies/{movie}/update','MovieController@edit')->name('movies.update');
 
-
-
-Route::get('/moviecreate','MovieController@create');
-Route::post('/moviecreate/store','MovieController@store');
-
-
-Route::resource('movie.reviews','ReviewController');
 
 
 

@@ -18,7 +18,7 @@ class MovieController extends Controller
     public function index()
     {
         $movies = Movie::all();
-        return view('welcome',['movies'=>$movies]);
+        return view('movies.index',['movies'=>$movies]);
     }
 
     /**
@@ -28,7 +28,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return view('/moviecreate');
+        return view('movies.create');
     }
 
     /**
@@ -43,11 +43,12 @@ class MovieController extends Controller
         // Form validation
         $validated = request()->validate([
             'title'=>'required',
+            'trailer'=>'required',
             'year'=>'required',
             'genre'=>'required',
             'rating'=>'required',
             'description'=>'required',
-            'image'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image'     =>  'required|image|mimes:jpeg,png,jpg,jfif,gif|max:2048'
         ]);
 
         $validated['owner_id']=auth()->id();
@@ -65,9 +66,9 @@ class MovieController extends Controller
         // Set user profile image path in database to filePath
         $validated['image'] = $filePath;
 
-           
+
         $movie = Movie::create($validated);
-        return redirect('/');
+        return redirect()->route('movies.show', $movie->id);
 
     }
 
@@ -80,7 +81,7 @@ class MovieController extends Controller
     public function show($id)
     {
         $movie = Movie::findOrFail($id);
-        return view('movieshow',compact('movie'));
+        return view('movies.show',compact('movie'));
     }
 
 
@@ -92,7 +93,8 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+        return view('movies.edit',compact('movie'));
     }
 
     /**

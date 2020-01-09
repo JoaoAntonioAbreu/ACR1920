@@ -17,6 +17,7 @@ class CreateMoviesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->default('title');
             $table->text('image')->nullable();
+            $table->String('trailer')->nullable();
             $table->year('year');
             $table->string('genre');
             $table->double('rating')->default(0.0)->nullable();
