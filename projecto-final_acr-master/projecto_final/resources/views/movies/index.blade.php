@@ -8,7 +8,7 @@
   </header>
 <div class="container">
 <div class="row text-center">
-@foreach ($movies as $movie)
+@foreach ($movies ?? '' as $movie)
         <div class="col-md-4">
           <div class="card">
             <img class="card-img-top" src="{{$movie->image}}" alt="" width="500" height="325">
@@ -23,7 +23,10 @@
        @endforeach
 </div>
 </div>
-<div class="col-md-2 ">
+<div class="col-md-12 row text-center align-content-center ">
     <a href="{{ route('movies.create')}}" class="btn btn-lg btn-block btn-primary">Create</a>
+
+
+    {!! $movies->links(); !!}
 </div>
 @endsection

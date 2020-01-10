@@ -10,26 +10,27 @@
 
     <form method="POST" action="{{ route('movies.update', $movie->id) }}" enctype="multipart/form-data">
         {{ csrf_field() }}
+        {{ method_field('PATCH') }}
         <div>
-            <input type="text" name="title" class="form-control" value="{{ old('title', $movie->title) }}" required>
+            <input type="text" name="title" class="form-control" value="{{$movie->title}}" >
         </div>
         <div>
-            <input name="trailer" class="form-control" value="{{ old('trailer',$movie->trailer) }}" required>
+            <input type="text" name="trailer" class="form-control" value="{{$movie->trailer}}" >
         </div>
         <div>
-            <input name="year" class="form-control"  value="{{ old('year',$movie->year) }}" required>
+            <input  type="text"name="year" class="form-control"  value="{{$movie->year}}" >
         </div>
         <div>
-            <input name="genre"  class="form-control"  value="{{ old('genre',$movie->genre) }}" required>
+            <input type="text" name="genre"  class="form-control"  value="{{$movie->genre}}" >
         </div>
         <div>
-            <input name="rating" class="form-control" value="{{ old('rating',$movie->rating) }}" required>
+            <input type="text" name="rating" class="form-control" value="{{ $movie->rating}}" >
         </div>
         <div>
-            <input name="description"  class="form-control" value="{{ old('description',$movie->description)}}" required>
+            <input type="text" name="description"  class="form-control" value="{{ $movie->description}}" >
         </div>
         <div>
-            <input id="image" type="file" class="form-control" name="image">
+            <input id="image" type="file" class="form-control" name="image" value="{{ $movie->image}}">
         </div>
         <div>
             <a href="{{ route('movies.update', $movie->id) }}" class="btn btn-success btn-block">Confirm</a>
@@ -42,6 +43,7 @@
     @if ($errors->any())
         <div class="notification is-danger">
             <ul>
+
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach

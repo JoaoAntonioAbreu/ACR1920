@@ -25,7 +25,7 @@ class ReviewController extends Controller
 
     public function create($movie_id)
     {
-        return view('reviews.create');
+        //return view('reviews.create');
     }
 
 

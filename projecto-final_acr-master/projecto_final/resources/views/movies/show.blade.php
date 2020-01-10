@@ -17,9 +17,16 @@
                <dd>{{$movie->created_at}}</dd>
            </dl>
             <a href="{{ route('movies.edit', $movie->id) }}" class="btn btn-primary btn-block">Edit</a>
-
-            <a href="{{ route('movies.destroy', $movie->id) }}" class="btn btn-danger btn-block">Delete</a>
-
+           <div>
+            <form method="POST" action="{{ route('movies.destroy', $movie->id) }}">
+                <input type="submit" value="Delete" class="btn btn-danger btn-block">
+                <input type="hidden" name="_token" value="{{ Session::token() }}">
+               {{ method_field('DELETE') }}
+            </form>
+            </div>
+            <div>
+                <a href="{{ route('movies.index', $movie->id) }}" class="btn btn-primary btn-block">Back</a>
+            </div>
         </div>
         </div>
 

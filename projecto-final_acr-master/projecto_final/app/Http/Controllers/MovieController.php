@@ -17,7 +17,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::orderBy('id','desc')->paginate(3);
+
         return view('movies.index',['movies'=>$movies]);
     }
 
@@ -104,41 +105,38 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateMovie(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        // Form validation
-        $request->validate([
-            'title'              =>  'required',
-            'image'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+
+         $validated = request()->validate([
+            'title'=>'required',
+            'trailer'=>'required',
+            'year'=>'required',
+            'genre'=>'required',
+            'rating'=>'required',
+            'description'=>'required',
+            'image'     =>  'image|mimes:jpeg,png,jpg,jfif,gif|max:2048'
         ]);
 
-        // Get current movie
-        $movie = Movie::findOrFail($id);
+        $movie = Movie::find($id);
 
-        $movie->title = $request->input('title');
-        $movie->year = $request->input('year');
-        $movie->genre = $request->input('genre');
-        $movie->description = $request->input('description');
-        // Check if a image has been uploaded
         if ($request->has('image')) {
             // Get image file
-            $image = $request->file('$image');
+            $image = $request->file('profile_image');
             // Make a image name based on user name and current timestamp
             $name = Str::slug($request->input('title')).'_'.time();
             // Define folder path
-            $folder = '/uploads/images/movies/';
+            $folder = '/uploads/images/';
             // Make a file path where image will be stored [ folder path + file name + file extension]
             $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
             // Upload image
             $this->uploadOne($image, $folder, 'public', $name);
-            // Set user movie image path in database to filePath
-            $movie->image = $filePath;
+            // Set user profile image path in database to filePath
+            $movie->profile_image = $filePath;
         }
-        // Persist movie record to database
-        $movie->save();
 
-        // Return movie back and show a flash message
-        return redirect()->back()->with(['status' => 'Movie updated successfully.']);
+        $movie->save($validated);
+        return redirect()->route('movies.show', $movie->id);
     }
 
     /**
@@ -149,6 +147,8 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $movie = Movie::find($id);
+        $movie->delete();
+        return redirect()->route('movies.index');
     }
 }
