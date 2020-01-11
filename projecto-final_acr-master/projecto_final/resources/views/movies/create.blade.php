@@ -1,45 +1,62 @@
 @extends('layouts.app')
 
-
+@section('title', '| Edit movie')
 
 @section('content')
+<div class="container">
+<div class="d-flex justify-content-center p-2 bd-highlight flex-column">
+        <div class="p-2 bd-highlight">
+             <h1>Insert a Movie :</h1>
+        </div>
 
-<div class="row text-center">
-    <div class="col-md-8 col-md-offset-2">
-        <h1>Create a new movie</h1>
 
     <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <div>
-            <input type="text" name="title" class="form-control" placeholder="Movie title" required>
+
+        <div class="p-2 bd-highlight">
+            <label class="font-weight-bold" for="">Title: </label>
+            <input type="text" name="title" class="form-control" value="Title" >
         </div>
-        <div>
-            <textarea name="trailer" class="form-control" placeholder="trailer" required></textarea>
+        <div  class="p-2 bd-highlight">
+            <label class="font-weight-bold" for="">Trailer: </label>
+            <input type="text" name="trailer" class="form-control" value="Trailer" >
         </div>
-        <div>
-            <textarea name="year" class="form-control" placeholder="year" required></textarea>
+        <div  class="p-2 bd-highlight">
+            <label class="font-weight-bold" for="">Year: </label>
+            <input type="number"name="year" class="form-control"  value="Year" >
         </div>
-        <div>
-            <textarea name="genre"  class="form-control" placeholder="genre content" required></textarea>
+        <div  class="p-2 bd-highlight">
+            <label class="font-weight-bold" for="">Genre: </label>
+            <select  name="genre" class="form-control" id="exampleFormControlSelect1">
+                <option>Action</option>
+                <option>Drama</option>
+                <option>Comedy</option>
+                <option>Sci-fi</option>
+                <option>Psychological</option>
+              </select>
         </div>
-        <div>
-            <textarea name="rating" class="form-control" placeholder="rating" required></textarea>
+        <div  class="p-2 bd-highlight">
+            <label class="font-weight-bold" for="">Rating: </label>
+            <input type="number" name="rating" class="form-control" value="Movie" >
         </div>
-        <div>
-            <textarea name="description"  class="form-control" placeholder="description" required></textarea>
+        <div  class="p-2 bd-highlight">
+            <label class="font-weight-bold" for="">Description: </label>
+            <input type="text" name="description"  class="form-control" value="Description" >
+        </div >
+        <div class="p-2 bd-highlight">
+            <input id="image" type="file" class="form-control" name="image" value="Image">
         </div>
-        <div>
-            <input id="image" type="file" class="form-control" name="image">
-        </div>
-        <div>
-            <button type="submit">Insert Movie</button>
+        <div class="p-2 bd-highlight">
+            <button type="submit" class="btn btn-outline-success btn-lg btn-block">Insert Movie</button>
         </div>
     </form>
+</div>
 </div>
 </div>
     @if ($errors->any())
         <div class="notification is-danger">
             <ul>
+
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach

@@ -17,11 +17,9 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::orderBy('id','desc')->paginate(3);
-
+        $movies = Movie::orderBy('id','desc')->paginate(4);
         return view('movies.index',['movies'=>$movies]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -29,6 +27,7 @@ class MovieController extends Controller
      */
     public function create()
     {
+
         return view('movies.create');
     }
 
@@ -82,7 +81,8 @@ class MovieController extends Controller
     public function show($id)
     {
         $movie = Movie::findOrFail($id);
-        return view('movies.show',compact('movie'));
+        $featured = Movie::inRandomOrder()->first();
+        return view('movies.show',compact('movie'),compact('featured'));
     }
 
 
@@ -108,7 +108,7 @@ class MovieController extends Controller
     public function update(Request $request, $id)
     {
 
-         $validated = request()->validate([
+        $this->validate($request, array(
             'title'=>'required',
             'trailer'=>'required',
             'year'=>'required',
@@ -116,13 +116,13 @@ class MovieController extends Controller
             'rating'=>'required',
             'description'=>'required',
             'image'     =>  'image|mimes:jpeg,png,jpg,jfif,gif|max:2048'
-        ]);
+        ));
 
         $movie = Movie::find($id);
 
         if ($request->has('image')) {
             // Get image file
-            $image = $request->file('profile_image');
+            $image = $request->file('image');
             // Make a image name based on user name and current timestamp
             $name = Str::slug($request->input('title')).'_'.time();
             // Define folder path
@@ -132,10 +132,16 @@ class MovieController extends Controller
             // Upload image
             $this->uploadOne($image, $folder, 'public', $name);
             // Set user profile image path in database to filePath
-            $movie->profile_image = $filePath;
+            $movie->image = $filePath;
         }
+        $movie->title=$request->input('title');
+        $movie->trailer = $request->input('trailer');
+        $movie->year = $request->input('year');
+        $movie->genre = $request->input('genre');
+        $movie->rating = $request->input('rating');
+        $movie->description = $request->input('description');
 
-        $movie->save($validated);
+        $movie->save();
         return redirect()->route('movies.show', $movie->id);
     }
 

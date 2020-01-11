@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Review;
-
+use App\Movie;
 class ReviewController extends Controller
 {
     /**
@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-         $reviews = Review::all();
+
     }
 
     /**
@@ -25,7 +25,7 @@ class ReviewController extends Controller
 
     public function create($movie_id)
     {
-        //return view('reviews.create');
+
     }
 
 
@@ -35,19 +35,27 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $movie_id)
     {
 
         // Form validation
-        $validated = request()->validate([
-            'body'=>'required|max:255',
-        ]);
+        $this->validate($request, array(
+            'review'=>'required'
+        ));
 
         $validated['owner_id']=auth()->id();
-        dd($request->getpathInfo());
+        $movie = Movie::find($movie_id);
 
 
-       return redirect()->route('movies.show',);
+        $review = new Review();
+        $review->movie_id=$movie_id;
+
+        $review->owner_id = auth()->id();
+
+        $review->body = $request->review;
+
+        $review->save();
+        return redirect()->route('movies.show',[$movie->id] );
     }
 
     /**

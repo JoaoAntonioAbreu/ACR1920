@@ -8,11 +8,11 @@ class Review extends Model
 {
     protected $guarded = [];
 
-    public function movies(){
+    public function movie(){
       return $this->belongsTo(Movie::class);
     }
 
-    public function user(){
+    public function owner(){
         return $this->belongsTo(User::class);
-      }
+    }
 }
